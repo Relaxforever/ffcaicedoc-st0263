@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startC1": "nodemon src/index.js http://localhost:3001",
-    "startC2": "nodemon src/index.js http://localhost:3002",
-    "startC3": "nodemon src/index.js http://localhost:3003",
-    "startC4": "nodemon src/index.js http://localhost:3004"
+    "startC1": "nodemon src/index.js http://localhost:3001 50051",
+    "startC2": "nodemon src/index.js http://localhost:3002 50052",
+    "startC3": "nodemon src/index.js http://localhost:3003 50053",
+    "startC4": "nodemon src/index.js http://localhost:3004 50054"
   },
 
   "start": "nodemon index.js",

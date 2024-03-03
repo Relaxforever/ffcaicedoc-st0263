@@ -6,6 +6,31 @@ const SERVER_URL = process.argv[2] || 'http://localhost:3000'; // Permite especi
 const peerName = `peer${Math.floor(Math.random() * 100)}`;
 const ip = getLocalIP();
 const HEARTBEAT_INTERVAL = 60000; // 60 segundos
+const portGrpc = process.argv[3] || 50051;
+
+
+
+const grpc = require('@grpc/grpc-js');
+const protoLoader = require('@grpc/proto-loader');
+const packageDefinition = protoLoader.loadSync('file_service.proto', {});
+const fileService = grpc.loadPackageDefinition(packageDefinition).fileshare;
+
+const client = new fileService.FileService(`localhost:${portGrpc}`, grpc.credentials.createInsecure());
+
+const peerId = peerName; // Este sería el identificador único del peer
+const files = ["ejemplo.txt", "archivo.txt"]; // Los archivos que el peer quiere anunciar
+
+client.AnnounceFiles({ peerId, files }, (error, response) => {
+  if (!error) {
+    console.log('Respuesta del servidor:', response.message);
+  } else {
+    console.error('Error:', error.message);
+  }
+});
+
+
+
+
 
 function getLocalIP() {
   const interfaces = os.networkInterfaces();
