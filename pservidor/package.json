@@ -1,0 +1,26 @@
+{
+  "name": "pservidor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js",
+    "startP1": "nodemon src/index.js 3001 50051",
+    "startP2": "nodemon src/index.js 3002 50052",
+    "startP3": "nodemon src/index.js 3003 50053",
+    "startP4": "nodemon src/index.js 3004 50054"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.10.1",
+    "@grpc/proto-loader": "^0.7.10",
+    "express": "^4.18.3",
+    "install": "^0.13.0",
+    "nodemon": "^3.1.0",
+    "npm": "^10.5.0",
+    "sqlite3": "^5.1.7"
+  }
+}

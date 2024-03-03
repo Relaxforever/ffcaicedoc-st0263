@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package fileshare;
+
+// El servicio define los métodos que puedes llamar remotamente
+service FileService {
+  // Anuncia los archivos disponibles de un peer
+  rpc AnnounceFiles(AnnounceRequest) returns (AnnounceResponse) {}
+}
+
+// Mensaje de solicitud para anunciar archivos
+message AnnounceRequest {
+  string peerId = 1;
+  repeated string files = 2; // Lista de nombres de archivos disponibles
+}
+
+// Mensaje de respuesta para confirmar el anuncio
+message AnnounceResponse {
+  bool success = 1;
+  string message = 2;
+}
