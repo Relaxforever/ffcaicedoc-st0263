@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  pservidor1:
+    build: ./pservidor
+    ports:
+      - "3001:3000"
+      - "50051:50051"
+    volumes:
+      - ./pservidor/files:/app/files
+    environment:
+      - SERVER_PORT=3001
+      - GRPC_PORT=50051
+
+  pcliente1:
+    build: ./pcliente
+    environment:
+      - SERVER_URL=http://pservidor1:3000
+      - GRPC_PORT=50051
+
+  pservidor2:
+    build: ./pservidor
+    ports:
+      - "3002:3000"
+      - "50052:50051"
+    volumes:
+      - ./pservidor/files:/app/files
+    environment:
+      - SERVER_PORT=3002
+      - GRPC_PORT=50052
+
+  pcliente2:
+    build: ./pcliente
+    environment:
+      - SERVER_URL=http://pservidor2:3000
+      - GRPC_PORT=50052
+
+  pservidor3:
+    build: ./pservidor
+    ports:
+      - "3003:3000"
+      - "50053:50051"
+    volumes:
+      - ./pservidor/files:/app/files
+    environment:
+      - SERVER_PORT=3003
+      - GRPC_PORT=50053
+
+  pcliente3:
+    build: ./pcliente
+    environment:
+      - SERVER_URL=http://pservidor3:3000
+      - GRPC_PORT=50053

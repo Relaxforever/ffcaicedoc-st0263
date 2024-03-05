@@ -1,6 +1,7 @@
 const axios = require('axios');
 const os = require('os');
-
+const fs = require('fs');
+const path = require('path');
 // Configuración inicial
 const SERVER_URL = process.argv[2] || 'http://localhost:3000'; // Permite especificar el servidor como argumento
 const peerName = `peer${Math.floor(Math.random() * 100)}`;
@@ -18,17 +19,25 @@ const fileService = grpc.loadPackageDefinition(packageDefinition).fileshare;
 const client = new fileService.FileService(`localhost:${portGrpc}`, grpc.credentials.createInsecure());
 
 const peerId = peerName; // Este sería el identificador único del peer
-const files = ["ejemplo.txt", "archivo.txt"]; // Los archivos que el peer quiere anunciar
+//const files = ["ejemplo.txt", "archivo.txt"]; // Los archivos que el peer quiere anunciar
 
-client.AnnounceFiles({ peerId, files }, (error, response) => {
-  if (!error) {
-    console.log('Respuesta del servidor:', response.message);
-  } else {
-    console.error('Error:', error.message);
+// Leer los nombres de archivo de la carpeta 'files'
+const filesDirectory = path.join(__dirname, 'files');
+fs.readdir(filesDirectory, (err, files) => {
+  if (err) {
+    return console.error('Error leyendo la carpeta de archivos:', err);
   }
+   // Asegúrate de generar o asignar este ID adecuadamente para cada peer
+  
+  // Realizar la solicitud para subir (anunciar) archivos
+  client.UploadFiles({ peerId, files }, (error, response) => {
+    if (!error) {
+      console.log('Respuesta del servidor:', response.message);
+    } else {
+      console.error('Error:', error.message);
+    }
+  });
 });
-
-
 
 
 
